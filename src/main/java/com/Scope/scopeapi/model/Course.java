@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "classes")
 @EntityListeners(AuditingEntityListener.class)
-public class Class {
+public class Course {
     @Id
     private String CRN;
     @Column(name ="department")
