@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping()
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class ScopeController {
 
     @Autowired
