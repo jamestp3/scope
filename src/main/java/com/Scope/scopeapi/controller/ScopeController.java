@@ -119,5 +119,5 @@ public class ScopeController {
         instructorRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
-    
+
 }
