@@ -29,6 +29,7 @@ class GroupList extends Component {
         }).then(() => {
             let updatedGroups = [...this.state.groups].filter(i => i.id !== id);
             this.setState({groups: updatedGroups});
+            this.render();
         });
     }
 
@@ -69,6 +70,9 @@ class GroupList extends Component {
                     <div className="float-right">
                         <Button color="success" tag={Link} to="/students/new">Add Student</Button>
                     </div>
+                     <div className="float-right">
+                                            <Button color="success" tag={Link} to="/students/search">Search Student</Button>
+                                        </div>
                     <h3>Students Table</h3>
                     <Table className="mt-4">
                         <thead>

@@ -4,6 +4,7 @@ import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import GroupList from './GroupList';
 import GroupEdit from './GroupEdit';
+import StudentSearch from './StudentSearch';
 
 class App extends Component {
     render() {
@@ -12,7 +13,9 @@ class App extends Component {
                 <Switch>
                     <Route path='/' exact={true} component={Home}/>
                     <Route path='/students' exact={true} component={GroupList}/>
+                    <Route path='/students/search' component={StudentSearch}/>
                     <Route path='/students/:id' component={GroupEdit}/>
+
                 </Switch>
             </Router>
         )
