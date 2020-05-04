@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "classes")
+@Table(name = "course")
 @EntityListeners(AuditingEntityListener.class)
 public class Course {
     @Id

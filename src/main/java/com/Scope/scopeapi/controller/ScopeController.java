@@ -5,9 +5,9 @@ import javax.validation.Valid;
 import com.Scope.scopeapi.model.Course;
 import com.Scope.scopeapi.model.Student;
 import com.Scope.scopeapi.model.Instructor;
-import com.Scope.scopeapi.repository.CourseRepository;
-import com.Scope.scopeapi.repository.InstructorRepository;
-import com.Scope.scopeapi.repository.StudentRepository;
+import com.Scope.scopeapi.repository.CourseRepo.CourseRepository;
+import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
+import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,16 +29,16 @@ public class ScopeController {
     @Autowired
     private CourseRepository courseRepository;
 
-
+//students
     @GetMapping(value ="/students")
-    public List<Student> getAllStudents(){
-        return studentRepository.findAll();//.toString();
+    public List<String[]> getAllStudents(){
+        return studentRepository.findAllStudents();//.toString();
     }
 
     @GetMapping(value ="/student/{id}")
-    public Student getStudentById(@PathVariable String id){
-       Optional<Student> student = studentRepository.findById(id);
-       return student.get();
+    public String[] getStudentById(@PathVariable String id){
+       List<String[]> student = studentRepository.findStudentByNetId(id);
+       return student.get(0);
     }
 
     @PostMapping("/student")
@@ -60,16 +60,16 @@ public class ScopeController {
     }
 
 
-
+//instructors
     @GetMapping(value ="/instructors")
-    public List<Instructor> getAllInstructors(){
-        return instructorRepository.findAll();//.toString();
+    public List<String[]> getAllInstructors(){
+        return instructorRepository.findAllInstructors() ;//.toString();
     }
 
     @GetMapping(value ="/instructor/{id}")
-    public Instructor getInstructorById(@PathVariable String id){
-        Optional<Instructor> instructor = instructorRepository.findById(id);
-        return instructor.get();
+    public List<String[]> getInstructorById(@PathVariable String id){
+         return instructorRepository.findInstructorByNetId(id);
+        //return instructor.get();
     }
 
     @PostMapping("/instructor")
@@ -91,17 +91,16 @@ public class ScopeController {
     }
 
 
-
+//courses
     @GetMapping(value ="/courses")
-    public List<Course> getAllCourses(){
-        return courseRepository.findAll();//.toString();
+    public List<String[]> getAllCourses(){
+        return courseRepository.findAllCourses();//.toString();
     }
 
     @GetMapping(value ="/course/{id}")
-    public Course getCourseById(@PathVariable String id){
-        Optional<Course> course = courseRepository.findById(id);
-        return course.get();
-    }
+    public List<String[]> getCourseById(@PathVariable String id){
+          return courseRepository.findCourseByCRN(id);
+            }
 
     @PostMapping("/course")
     ResponseEntity<Course> createCourse(@Valid @RequestBody Course course) throws URISyntaxException{
