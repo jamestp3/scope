@@ -3,9 +3,11 @@ package com.Scope.scopeapi.controller;
 import javax.validation.Valid;
 
 import com.Scope.scopeapi.model.Course;
+import com.Scope.scopeapi.model.Enrollment;
 import com.Scope.scopeapi.model.Student;
 import com.Scope.scopeapi.model.Instructor;
 import com.Scope.scopeapi.repository.CourseRepo.CourseRepository;
+import com.Scope.scopeapi.repository.EnrollmentRepo.EnrollmentRepository;
 import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
 import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class ScopeController {
     private InstructorRepository instructorRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
 
 //students
     @GetMapping(value ="/students")
@@ -105,7 +109,7 @@ public class ScopeController {
     @PostMapping("/course")
     ResponseEntity<Course> createCourse(@Valid @RequestBody Course course) throws URISyntaxException{
         Course result = courseRepository.save(course);
-        return ResponseEntity.created(new URI("/instructor/" +result.getCRN())).body(course);
+        return ResponseEntity.created(new URI("/course/" +result.getCRN())).body(course);
     }
 
     @PutMapping(value = "/course/{id}")
@@ -120,4 +124,18 @@ public class ScopeController {
         return ResponseEntity.ok().build();
     }
 
+
+    //enrollments
+
+    @GetMapping(value ="/enrollment")
+    public List<String[]> getAllEnrollments(){
+        return enrollmentRepository.findAllEnrollments();//.toString();
+    }
+
+
+    @PostMapping("/enrollment")
+    ResponseEntity<Enrollment> createEnrollment(@Valid @RequestBody Enrollment enrollment) throws URISyntaxException{
+        Enrollment result = enrollmentRepository.save(enrollment);
+        return ResponseEntity.created(new URI("/enrollment/" +result.getCRN())).body(enrollment);
+    }
 }

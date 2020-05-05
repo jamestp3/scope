@@ -27,3 +27,4 @@ public class Assessment{
         this.details = details;
     }
 }
+
