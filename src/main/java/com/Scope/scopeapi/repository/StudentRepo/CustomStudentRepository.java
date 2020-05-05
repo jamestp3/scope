@@ -8,5 +8,5 @@ public interface CustomStudentRepository {
 
     List<String[]> findAllStudents();
     List<String[]> findStudentByNetId(String id);
-
+    List<String[]> findStudentClasses(String netId);
 }

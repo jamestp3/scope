@@ -1,15 +1,18 @@
 package com.Scope.scopeapi.controller;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.Valid;
 
-import com.Scope.scopeapi.model.Course;
-import com.Scope.scopeapi.model.Enrollment;
-import com.Scope.scopeapi.model.Student;
-import com.Scope.scopeapi.model.Instructor;
+import com.Scope.scopeapi.model.*;
+import com.Scope.scopeapi.repository.AssessmentRepo.AssessmentRepository;
 import com.Scope.scopeapi.repository.CourseRepo.CourseRepository;
 import com.Scope.scopeapi.repository.EnrollmentRepo.EnrollmentRepository;
 import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
+
 import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
+import com.mongodb.BasicDBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,8 +36,14 @@ public class ScopeController {
     private CourseRepository courseRepository;
     @Autowired
     private EnrollmentRepository enrollmentRepository;
+    @Autowired
+    private AssessmentRepository assessmentRepository;
 
-//students
+
+
+
+
+    //students
     @GetMapping(value ="/students")
     public List<String[]> getAllStudents(){
         return studentRepository.findAllStudents();//.toString();
@@ -97,7 +107,7 @@ public class ScopeController {
 
 //courses
     @GetMapping(value ="/courses")
-    public List<String[]> getAllCourses(){
+    public List<Map> getAllCourses(){
         return courseRepository.findAllCourses();//.toString();
     }
 
@@ -138,4 +148,30 @@ public class ScopeController {
         Enrollment result = enrollmentRepository.save(enrollment);
         return ResponseEntity.created(new URI("/enrollment/" +result.getCRN())).body(enrollment);
     }
+
+    //mongo
+    @GetMapping(value ="/Assessment")
+    public List<BasicDBObject> getAllAssessments(){
+        return assessmentRepository.findAllAssessments();//.toString();
+    }
+    @GetMapping(value ="/Assessment/{CRN}")
+    public List<BasicDBObject> getAssessmentByCRN(@PathVariable String CRN){
+        return assessmentRepository.findAssessmentByClass(CRN);
+    }
+
+
+
+
+
+
+    //query
+
+    @GetMapping(value ="/query/{netId}")
+    public List<String[]> getStudentClasses(@PathVariable String netId){
+
+
+
+       return studentRepository.findStudentClasses(netId);
+    }
+
 }

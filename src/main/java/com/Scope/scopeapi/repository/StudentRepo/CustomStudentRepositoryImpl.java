@@ -30,6 +30,14 @@ public class CustomStudentRepositoryImpl implements CustomStudentRepository {
     }
 
 
-
-
+public  List<String[]> findStudentClasses(String netid) {
+    Query query = em.createNativeQuery("SELECT c.course_title,c.department,c.course_number,c.crn FROM students s " +
+            "join enrollment e on s.net_id = e.net_id " +
+            "join course c on c.crn = e.crn "+
+            "WHERE s.net_id = ?"
+    );
+    query.setParameter(1,netid);
+    List<String[]> result = query.getResultList();
+    return result;
+}
 }
