@@ -1,12 +1,11 @@
 package com.Scope.scopeapi.repository.StudentRepo;
 
-import com.Scope.scopeapi.model.Student;
-
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public interface CustomStudentRepository {
 
-    List<String[]> findAllStudents();
-    List<String[]> findStudentByNetId(String id);
-    List<String[]> findStudentClasses(String netId);
+    JSONArray findAllStudents() throws JSONException;
+    JSONArray findStudentByNetId(String id) throws JSONException;
+    JSONArray findStudentClasses(String netId) throws JSONException;
 }

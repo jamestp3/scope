@@ -1,6 +1,8 @@
 package com.Scope.scopeapi.repository.InstructorRepo;
 
-import com.Scope.scopeapi.repository.CourseRepo.CustomCourseRepository;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,16 +16,36 @@ public class CustomInstructorRepositoryImpl implements CustomInstructorRepositor
     EntityManager em;
 
 
-    public List<String[]> findAllInstructors(){
+    public JSONArray findAllInstructors() throws JSONException {
         Query query = em.createNativeQuery("SELECT * FROM instructors");
-        List<String[]> result = query.getResultList();
-        return result;
+        List<Object[]> list = query.getResultList();
+
+
+        JSONArray json_arr=new JSONArray();
+        for(Object[] s: list){
+            JSONObject json_obj = new JSONObject();
+            json_obj.put("NetID",(String) s[0]);
+            json_obj.put("FirstName",(String) s[1]);
+            json_obj.put("LastName",(String) s[2]);
+            json_arr.put(json_obj);
+        }
+        return json_arr;
     }
-    public List<String[]> findInstructorByNetId(String id){
+    public JSONArray findInstructorByNetId(String id) throws JSONException {
         Query query = em.createNativeQuery("SELECT * FROM instructors WHERE net_id = ?");
         query.setParameter(1,id);
-        List<String[]> result = query.getResultList();
-        return result;
+        List<Object[]> list = query.getResultList();
+
+
+        JSONArray json_arr=new JSONArray();
+        for(Object[] s: list){
+            JSONObject json_obj = new JSONObject();
+            json_obj.put("NetID",(String) s[0]);
+            json_obj.put("FirstName",(String) s[1]);
+            json_obj.put("LastName",(String) s[2]);
+            json_arr.put(json_obj);
+        }
+        return json_arr;
     }
 
 }

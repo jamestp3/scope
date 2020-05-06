@@ -1,6 +1,8 @@
 package com.Scope.scopeapi.repository.StudentRepo;
 
-import com.Scope.scopeapi.repository.StudentRepo.CustomStudentRepository;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.Query;
 
@@ -16,28 +18,60 @@ public class CustomStudentRepositoryImpl implements CustomStudentRepository {
     EntityManager em;
 
 
-  public List<String[]> findAllStudents(){
+  public JSONArray findAllStudents() throws JSONException {
     Query query = em.createNativeQuery("SELECT * FROM students");
-    List<String[]> result = query.getResultList();
-    return result;
+
+      List<Object[]> list = query.getResultList();
+
+
+      JSONArray json_arr=new JSONArray();
+      for(Object[] s: list){
+          JSONObject json_obj = new JSONObject();
+          json_obj.put("NetID",(String) s[0]);
+          json_obj.put("FirstName",(String) s[1]);
+          json_obj.put("LastName",(String) s[2]);
+          json_arr.put(json_obj);
+      }
+      return json_arr;
   }
 
-   public List<String[]> findStudentByNetId(String id){
+   public JSONArray findStudentByNetId(String id) throws JSONException {
       Query query = em.createNativeQuery("SELECT * FROM students WHERE net_id =?");
-      query.setParameter(1,id);
-      List<String[]> result = query.getResultList();
-      return result;
+       query.setParameter(1,id);
+       List<Object[]> list = query.getResultList();
+
+
+       JSONArray json_arr=new JSONArray();
+       for(Object[] s: list){
+           JSONObject json_obj = new JSONObject();
+           json_obj.put("NetID",(String) s[0]);
+           json_obj.put("FirstName",(String) s[1]);
+           json_obj.put("LastName",(String) s[2]);
+           json_arr.put(json_obj);
+       }
+       return json_arr;
     }
 
 
-public  List<String[]> findStudentClasses(String netid) {
+public JSONArray findStudentClasses(String netid) throws JSONException {
     Query query = em.createNativeQuery("SELECT c.course_title,c.department,c.course_number,c.crn FROM students s " +
             "join enrollment e on s.net_id = e.net_id " +
             "join course c on c.crn = e.crn "+
             "WHERE s.net_id = ?"
     );
     query.setParameter(1,netid);
-    List<String[]> result = query.getResultList();
-    return result;
+    List<Object[]> list = query.getResultList();
+
+
+    JSONArray json_arr=new JSONArray();
+    for(Object[] s: list){
+        JSONObject json_obj = new JSONObject();
+        json_obj.put("CourseTitle",(String) s[0]);
+        json_obj.put("Department",(String) s[1]);
+        json_obj.put("CourseNumber",(String) s[2]);
+        json_obj.put("CRN",(String) s[3]);
+        json_arr.put(json_obj);
+    }
+    return json_arr;
 }
 }
