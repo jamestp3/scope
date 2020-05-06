@@ -4,6 +4,9 @@ import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 
 class StudentView extends Component {
+    courseTitle;
+    courseNumber;
+    department;
 
     constructor(props) {
         super(props);
@@ -41,19 +44,15 @@ class StudentView extends Component {
         }
 
         const groupList = groups.map(group => {
-            // const firstName = `${group.firstName || ''} `;
-            // const lastName = `${group.lastName || ''} `;
             const courseTitle = `${group.courseTitle || ''} `;
             const courseNumber = `${group.courseNumber || ''} `;
             const department = `${group.department || ''} `;
 
-
-
-            return <tr key={group.crn}>
-                    <td style={{whiteSpace: 'nowrap'}}>{group.crn}</td>
-                    <td>{courseTitle}</td>
-                    <td>{courseNumber}</td>
+            return <tr key={group.CRN}>
+                    <td style={{whiteSpace: 'nowrap'}}>{group.CRN}</td>
                     <td>{department}</td>
+                    <td>{courseNumber}</td>
+                    <td>{courseTitle}</td>
 
                     {/*<td>*/}
                     {/*    <ButtonGroup>*/}
@@ -74,7 +73,7 @@ class StudentView extends Component {
                          <Button color="primary" tag={Link} to="/students/search">Search Class</Button>
                      </div>
                     <div className="float-right">
-                        <Button color="danger" tag={Link} to="/students/new">Delete Class</Button>
+                        <Button color="danger" tag={Link} to="/students/delete">Delete Class</Button>
                     </div>
                     <div className="float-right">
                         <Button color="success" tag={Link} to="/students/new">Add Class</Button>

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class GroupEdit extends Component {
+class ClassEdit extends Component {
 
     emptyItem = {
         CRN: '',
@@ -23,7 +23,7 @@ class GroupEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`/api/student/${this.props.match.params.id}`)).json();
+            const group = await (await fetch(`/api/course/${this.props.match.params.id}`)).json();
             this.setState({item: group});
         }
     }
@@ -41,7 +41,7 @@ class GroupEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/api/student', {
+        await fetch('/api/course', {
             method: (item.id) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -91,4 +91,4 @@ class GroupEdit extends Component {
     }
 }
 
-export default withRouter(GroupEdit);
+export default withRouter(ClassEdit);
