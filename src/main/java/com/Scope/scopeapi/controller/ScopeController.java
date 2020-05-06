@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import com.Scope.scopeapi.model.*;
 import com.Scope.scopeapi.repository.AssessmentRepo.AssessmentRepository;
@@ -152,6 +153,13 @@ public class ScopeController {
         return ResponseEntity.created(new URI("/enrollment/" +result.getCRN())).body(enrollment);
     }
 
+    @DeleteMapping(value = "/enrollment/{netId}/{CRN}")
+    ResponseEntity<?> deleteEnrollment(@PathVariable String netId, @PathVariable String CRN){
+       // Enrollment enrollment =new Enrollment(netId,CRN);
+        enrollmentRepository.deleteEnrollment(CRN,netId);
+        return ResponseEntity.ok().build();
+    }
+
     //mongo
     @GetMapping(value ="/Assessment")
     public List<BasicDBObject> getAllAssessments(){
@@ -161,6 +169,7 @@ public class ScopeController {
     public List<BasicDBObject> getAssessmentByCRN(@PathVariable String CRN){
         return assessmentRepository.findAssessmentByClass(CRN);
     }
+
 
 
 
