@@ -14,6 +14,14 @@ public class Enrollment {
     @Column(name="CRN")
     private String CRN;
 
+    public Enrollment(){
+    }
+
+    public Enrollment(String net_id, String CRN) {
+        this.net_id = net_id;
+        this.CRN = CRN;
+    }
+
     public String getNet_id() {
         return net_id;
     }
