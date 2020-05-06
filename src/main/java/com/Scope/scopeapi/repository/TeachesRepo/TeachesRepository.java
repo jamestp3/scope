@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TeachesRepository extends JpaRepository<Teaches,String> , CustomTeachesRepository{
 
 
-
     @Modifying
     @Transactional
     @Query("delete from Teaches e WHERE e.CRN =:CRN and e.net_id =:NET")

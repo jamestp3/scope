@@ -3,6 +3,9 @@ package com.Scope.scopeapi.repository.CourseRepo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,5 +69,21 @@ public class CustomCourseRepositoryImpl implements CustomCourseRepository {
             json_arr.put(json_obj);
         }
         return json_arr;
+    }
+
+
+
+    void createCourse(@Param("CRN") String CRN, @Param("Dept") String dept, @Param("title") String title, @Param("num") String num){
+        Query query = em.createNativeQuery("INSERT INTO Course VALUES (:CRN ,:Dept, :title, :num)");
+    }
+
+
+    void updateCourse(@Param("CRN") String CRN, @Param("Dept") String dept,@Param("title") String title,@Param("num") String num){
+        Query query = em.createNativeQuery("INSERT INTO Course VALUES (:CRN ,:Dept, :title, :num)");
+    }
+
+
+    void deleteCourse(@Param("CRN") String CRN){
+        Query query = em.createNativeQuery("delete from Course  WHERE  CRN==CRN");
     }
 }

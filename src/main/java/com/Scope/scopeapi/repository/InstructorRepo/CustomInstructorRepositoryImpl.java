@@ -3,6 +3,9 @@ package com.Scope.scopeapi.repository.InstructorRepo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -88,6 +91,21 @@ public class CustomInstructorRepositoryImpl implements CustomInstructorRepositor
             json_arr.put(json_obj);
         }
         return json_arr;
+    }
+
+
+
+    void createInstructors(@Param("FirstName") String FirstName, @Param("LastName") String LastName, @Param("NET") String netId){
+        Query query = em.createNativeQuery("INSERT INTO Instructors VALUES (:NET,:FirstName,:LastName)");
+    }
+
+    void updateInstructors(@Param("FirstName") String FirstName,@Param("LastName") String LastName, @Param("NET") String netId){
+        Query query = em.createNativeQuery("UPDATE Instructor SET net_id = :NET, LastName = :LastName, FirstName=:FirstName");
+    }
+
+
+    void deleteInstructors(@Param("NET") String netId){
+        Query query = em.createNativeQuery("delete from Instructor e WHERE net_id=:NET");
     }
 
 }

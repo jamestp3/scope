@@ -3,6 +3,9 @@ package com.Scope.scopeapi.repository.StudentRepo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
 
@@ -92,6 +95,23 @@ public JSONArray findStudentClasses(String netid) throws JSONException {
             json_arr.put(json_obj);
         }
         return json_arr;
+    }
+
+
+
+
+    void createStudents(@Param("FirstName") String FirstName, @Param("LastName") String LastName, @Param("NET") String netId){
+      Query query = em.createNativeQuery("INSERT INTO Student VALUES (:NET,:FirstName,:LastName)");
+    }
+
+
+    void updateStudents(@Param("FirstName") String FirstName,@Param("LastName") String LastName, @Param("NET") String netId){
+        Query query = em.createNativeQuery("UPDATE Student SET net_id = :NET, LastName = :LastName, FirstName=:FirstName");
+    }
+
+
+    void deleteStudents(@Param("NET") String netId){
+        Query query = em.createNativeQuery("delete from Student  WHERE net_id=:NET");
     }
 
 }
