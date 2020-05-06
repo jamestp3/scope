@@ -50,4 +50,21 @@ public class CustomCourseRepositoryImpl implements CustomCourseRepository {
         }
         return json_arr;
     }
+    public JSONArray findCourseByNetId(String id) throws JSONException {
+        Query query = em.createNativeQuery("SELECT * FROM course c JOIN enrollment WHERE CRN =?");
+        query.setParameter(1,id);
+        List<Object[]> list = query.getResultList();
+
+
+        JSONArray json_arr=new JSONArray();
+        for(Object[] s: list){
+            JSONObject json_obj = new JSONObject();
+            json_obj.put("CRN",(String) s[0]);
+            json_obj.put("Department",(String) s[1]);
+            json_obj.put("Course_Title",(String) s[2]);
+            json_obj.put("Course_Number",(String) s[3]);
+            json_arr.put(json_obj);
+        }
+        return json_arr;
+    }
 }

@@ -169,7 +169,10 @@ public class ScopeController {
     public List<BasicDBObject> getAssessmentByCRN(@PathVariable String CRN){
         return assessmentRepository.findAssessmentByClass(CRN);
     }
-
+    @GetMapping(value ="/Assessment/netId/{netId}")
+    public List<BasicDBObject> getAssessmentByNetId(@PathVariable String netId) throws JSONException {
+        return assessmentRepository.findAssessmentByNetId(netId);
+    }
 
 
 
