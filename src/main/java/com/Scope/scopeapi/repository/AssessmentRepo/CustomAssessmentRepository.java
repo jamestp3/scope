@@ -11,5 +11,6 @@ public interface CustomAssessmentRepository {
     List<BasicDBObject> findAllAssessments();
     List<BasicDBObject> findAssessmentByClass(String CRN);
     List<BasicDBObject> findAssessmentByNetId(String netId) throws JSONException;
-
+    List<BasicDBObject> findAssessmentByInstructorNetId(String netId) throws JSONException;
+    void insertAssessment(BasicDBObject db);
 }
