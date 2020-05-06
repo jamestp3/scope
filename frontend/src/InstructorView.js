@@ -69,12 +69,12 @@ class InstructorView extends Component {
                         <Button color="primary" tag={Link} to="/instructors/search">Search Class</Button>
                     </div>
                     <div className="float-right">
-                        <Button color="danger" tag={Link} to="/instructors/new">Delete Class</Button>
+                        <Button color="danger" tag={Link} to="/instructors/teaches/delete">Delete Class</Button>
                     </div>
                     <div className="float-right">
-                        <Button color="success" tag={Link} to="/instructors/new">Add Class</Button>
+                        <Button color="success" tag={Link} to="/instructors/teaches/add">Add Class</Button>
                     </div>
-                    <h3>Student Name Here</h3>
+                    <h3>Instructor Portal</h3>
                     <h4>Classes</h4>
 
                     <Table className="shadow mt-4">

@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
+
 
 import com.Scope.scopeapi.model.*;
 import com.Scope.scopeapi.repository.AssessmentRepo.AssessmentRepository;
@@ -15,12 +15,11 @@ import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
 import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
 import com.Scope.scopeapi.repository.TeachesRepo.TeachesRepository;
 import com.mongodb.BasicDBObject;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.BASE64Decoder;
 
 import java.io.IOException;
 import java.net.URI;

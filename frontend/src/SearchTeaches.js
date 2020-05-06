@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class StudentSearch extends Component {
+class SearchTeaches extends Component {
 
     emptyItem = {
         netId: '',
@@ -63,7 +63,7 @@ class StudentSearch extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Search</Button>{' '}
-                        <Button color="secondary" tag={Link} to="/students">Cancel</Button>
+                        <Button color="secondary" tag={Link} to="/instructors">Cancel</Button>
                     </FormGroup>
                 </Form>
                 <text>
@@ -74,4 +74,4 @@ class StudentSearch extends Component {
     }
 }
 
-export default withRouter(StudentSearch);
+export default withRouter(SearchTeaches);
