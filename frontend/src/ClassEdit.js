@@ -6,9 +6,10 @@ import AppNavbar from './AppNavbar';
 class GroupEdit extends Component {
 
     emptyItem = {
-        netId: '',
-        firstName: '',
-        lastName: '',
+        CRN: '',
+        department: '',
+        courseNumber: '',
+        courseTitle: '',
     };
 
     constructor(props) {
@@ -61,19 +62,24 @@ class GroupEdit extends Component {
                 {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="netId">CRN</Label>
-                        <Input type="text" name="netId" id="name" value={item.netId || ''}
-                               onChange={this.handleChange} autoComplete="netId"/>
+                        <Label for="CRN">CRN</Label>
+                        <Input type="text" name="CRN" id="CRN" value={item.CRN || ''}
+                               onChange={this.handleChange} autoComplete="CRN"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="firstName">First Name</Label>
-                        <Input type="text" name="firstName" id="firstName" value={item.firstName || ''}
-                               onChange={this.handleChange} autoComplete="firstName"/>
+                        <Label for="department">Department</Label>
+                        <Input type="text" name="department" id="department" value={item.department || ''}
+                               onChange={this.handleChange} autoComplete="department"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="lastName">Last Name</Label>
-                        <Input type="text" name="lastName" id="lastName" value={item.lastName || ''}
-                               onChange={this.handleChange} autoComplete="lastName"/>
+                        <Label for="courseNumber">Course Number</Label>
+                        <Input type="text" name="courseNumber" id="courseNumber" value={item.courseNumber || ''}
+                               onChange={this.handleChange} autoComplete="courseNumber"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="courseTitle">Course Title</Label>
+                        <Input type="text" name="courseTitle" id="courseTitle" value={item.courseTitle || ''}
+                               onChange={this.handleChange} autoComplete="courseTitle"/>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
