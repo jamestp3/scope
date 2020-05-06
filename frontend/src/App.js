@@ -7,6 +7,11 @@ import AddEnrollment from './AddEnrollment';
 import StudentSearch from './StudentSearch';
 import InstructorView from "./InstructorView";
 import DeleteEnrollment from "./DeleteEnrollment";
+import AddTeaches from "./AddTeaches";
+import DeleteTeaches from "./DeleteTeaches";
+import SearchTeaches from "./SearchTeaches";
+
+
 
 class App extends Component {
     render() {
@@ -19,9 +24,9 @@ class App extends Component {
                     <Route path='/students/enrollment/add' component={AddEnrollment}/>
                     <Route path='/students/enrollment/delete' component={DeleteEnrollment}/>
                     <Route path='/instructors' exact={true} component={InstructorView}/>
-                    <Route path='/instructors/search' component={StudentSearch}/>
-                    <Route path='/instructors/enrollment/add' component={AddEnrollment}/>
-                    <Route path='/instructors/enrollment/delete' component={DeleteEnrollment}/>
+                    <Route path='/instructors/search' component={SearchTeaches}/>
+                    <Route path='/instructors/teaches/add' component={AddTeaches}/>
+                    <Route path='/instructors/teaches/delete' component={DeleteTeaches}/>
                 </Switch>
             </Router>
         )
