@@ -10,6 +10,9 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 public class Enrollment {
     @Id
+    @GeneratedValue
+    private int id;
+    @Column(name="net_id")
     private String net_id;
     @Column(name="CRN")
     private String CRN;
@@ -20,6 +23,14 @@ public class Enrollment {
     public Enrollment(String net_id, String CRN) {
         this.net_id = net_id;
         this.CRN = CRN;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNet_id() {
