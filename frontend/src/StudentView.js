@@ -4,36 +4,19 @@ import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 
 class StudentView extends Component {
-    courseTitle;
-    courseNumber;
-    department;
 
     constructor(props) {
         super(props);
         this.state = {groups: [], isLoading: true};
-        this.remove = this.remove.bind(this);
+      //  this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
         this.setState({isLoading: true});
 
-        fetch('api/students')
+        fetch('api/enrollment')
             .then(response => response.json())
             .then(data => this.setState({groups: data, isLoading: false}));
-    }
-
-    async remove(id) {
-        await fetch(`/api/student/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(() => {
-            let updatedGroups = [...this.state.groups].filter(i => i.id !== id);
-            this.setState({groups: updatedGroups});
-            this.render();
-        });
     }
 
     render() {
@@ -44,15 +27,11 @@ class StudentView extends Component {
         }
 
         const groupList = groups.map(group => {
-            const courseTitle = `${group.courseTitle || ''} `;
-            const courseNumber = `${group.courseNumber || ''} `;
-            const department = `${group.department || ''} `;
+            const crn = `${group.crn || ''} `;
 
-            return <tr key={group.CRN}>
-                    <td style={{whiteSpace: 'nowrap'}}>{group.CRN}</td>
-                    <td>{department}</td>
-                    <td>{courseNumber}</td>
-                    <td>{courseTitle}</td>
+            return <tr key={group.net_id}>
+                    <td style={{whiteSpace: 'nowrap'}}>{group.net_id}</td>
+                    <td>{this.crn}</td>
 
                     {/*<td>*/}
                     {/*    <ButtonGroup>*/}
@@ -72,9 +51,9 @@ class StudentView extends Component {
                      <div className="float-right">
                          <Button color="primary" tag={Link} to="/students/search">Search Class</Button>
                      </div>
-                    <div className="float-right">
-                        <Button color="danger" tag={Link} to="/students/delete">Delete Class</Button>
-                    </div>
+                    {/*<div className="float-right">*/}
+                    {/*    <Button color="danger" tag={Link} to="/students/delete">Delete Class</Button>*/}
+                    {/*</div>*/}
                     <div className="float-right">
                         <Button color="success" tag={Link} to="/students/new">Add Class</Button>
                     </div>
