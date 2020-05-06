@@ -5,105 +5,89 @@ import { Link } from 'react-router-dom';
 
 class InstructorView extends Component {
 
+    emptyItem = {
+        netId: 'lofendo2'
+    };
+
     constructor(props) {
         super(props);
-        this.state = {groups: [], isLoading: true};
-        this.remove = this.remove.bind(this);
+        this.state = {groups: [], isLoading: true, item: this.emptyItem};
     }
 
     componentDidMount() {
+        // if (this.props.match.params.id !== 'new') {
+        //     const group = fetch(`/api/course/${this.props.match.params.id}`).json();
+        //     this.setState({item: group});
+        // }
         this.setState({isLoading: true});
-
-        fetch('api/instructors')
+        fetch('api/students')
             .then(response => response.json())
             .then(data => this.setState({groups: data, isLoading: false}));
     }
 
-    async remove(id) {
-        await fetch(`/api/instructor/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(() => {
-            let updatedGroups = [...this.state.groups].filter(i => i.id !== id);
-            this.setState({groups: updatedGroups});
-            this.render();
-        });
+    handleChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        let item = this.state.item;
+        item[name] = value;
+        this.setState({item});
     }
+
 
     render() {
         const {groups, isLoading} = this.state;
+        const {item} = this.state;
 
         if (isLoading) {
             return <p>Loading...</p>;
         }
 
         const groupList = groups.map(group => {
-            const firstName = `${group.firstName || ''} `;
-            const lastName = `${group.lastName || ''} `;
-            const fourth = `${group.fourth || ''} `;
+            const department = `${group.department || ''} `;
+            const course_number = `${group.course_number || ''} `;
+            const course_title = `${group.course_title || ''} `;
 
-            return <tr key={group.netId}>
-                <td style={{whiteSpace: 'nowrap'}}>{group.netId}</td>
-                <td>{firstName}</td>
-                <td>{lastName}</td>
-                <td>{fourth}</td>
-                {/*<td>*/}
-                {/*    <ButtonGroup>*/}
-                {/*        <Button size="sm" color="primary" tag={Link} to={"/students/" + group.netId}>Edit</Button>*/}
-                {/*        <Button size="sm" color="danger" onClick={() => this.remove(group.netId)}>Delete</Button>*/}
-                {/*    </ButtonGroup>*/}
-                {/*</td>*/}
+            return <tr key={group.crn}>
+                <td style={{whiteSpace: 'nowrap'}}>{group.crn}</td>
+                <td>{department}</td>
+                <td>{course_number}</td>
+                <td>{course_title}</td>
+                <td>
+                    {/*<ButtonGroup>*/}
+                    {/*    <Button size="sm" color="danger" onClick={() => this.remove(group.net_id, group.crn)}>Delete</Button>*/}
+                    {/*</ButtonGroup>*/}
+                </td>
             </tr>
         });
 
 
         return (
+
             <div>
                 <AppNavbar/>
                 <Container fluid>
+                    <h1>Instructor Portal</h1>
+                    <h4>Classes and Assignments</h4>
 
-                    <div className="float-right">
-                        <Button color="primary" tag={Link} to="/instructors/search">Search Class</Button>
+                    <div className="float-left">
+                        <Button color="success" tag={Link} to="/instructors/display">Display Courses Taught By Instructor</Button>
                     </div>
-                    <div className="float-right">
-                        <Button color="danger" tag={Link} to="/instructors/teaches/delete">Delete Class</Button>
+                    <div className="float-left">
+                        <Button color="primary" tag={Link} to="/instructors/search">Search Class By CRN</Button>
                     </div>
-                    <div className="float-right">
-                        <Button color="success" tag={Link} to="/instructors/teaches/add">Add Class</Button>
+                    <div className="float-left">
+                        <Button color="danger" tag={Link} to="/instructors/teaches/delete">Delete Taught Class</Button>
                     </div>
-                    <h3>Instructor Portal</h3>
-                    <h4>Classes</h4>
-
-                    <Table className="shadow mt-4">
-                        <thead>
-                        <tr>
-                            <th width="20%">CRN</th>
-                            <th width="20%">Department</th>
-                            <th width="20%">Course Number</th>
-                            <th width="20%">Course Title</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {groupList}
-                        </tbody>
-                    </Table>
-                    <h4>Assignments</h4>
-                    <Table className="shadow mt-4">
-                        <thead>
-                        <tr>
-                            <th width="20%">Type</th>
-                            <th width="20%">Title</th>
-                            <th width="20%">Location</th>
-                            <th width="20%">Due Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {groupList}
-                        </tbody>
-                    </Table>
+                    <div className="float-left">
+                        <Button color="success" tag={Link} to="/instructors/teaches/add">Add Taught Class</Button>
+                    </div>
+                    <div className="float-left">
+                        <Button color="success" tag={Link} to="/instructors/assignment/display">Display Assignment By Instructor</Button>
+                    </div>
+                    <div className="float-left">
+                        <Button color="primary" tag={Link} to="/instructors/assignment/search">Search Assignment By CRN</Button>
+                    </div>
                 </Container>
             </div>
         );

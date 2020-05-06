@@ -52,7 +52,7 @@ class DeleteTeaches extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{'Delete Class'}</h2>;
+        const title = <h2>{'Delete Taught Class'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -71,7 +71,7 @@ class DeleteTeaches extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Submit</Button>{' '}
-                        <Button color="secondary" tag={Link} to="/students">Cancel</Button>
+                        <Button color="secondary" tag={Link} to="/instructors">Cancel</Button>
                     </FormGroup>
                 </Form>
             </Container>
