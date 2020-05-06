@@ -10,6 +10,9 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 public class Teaches {
     @Id
+    @GeneratedValue
+    private int id;
+    @Column(name="net_id")
     private String net_id;
     @Column(name="CRN")
     private String CRN;
