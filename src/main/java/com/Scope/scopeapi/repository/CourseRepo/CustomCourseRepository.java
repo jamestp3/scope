@@ -1,12 +1,14 @@
 package com.Scope.scopeapi.repository.CourseRepo;
 
-import java.util.List;
-import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 
 public interface CustomCourseRepository {
 
 
-    List<Map> findAllCourses();
-    List<String[]> findCourseByCRN(String id);
+    JSONArray findAllCourses() throws IOException, JSONException;
+    JSONArray findCourseByCRN(String id) throws JSONException;
 
 }

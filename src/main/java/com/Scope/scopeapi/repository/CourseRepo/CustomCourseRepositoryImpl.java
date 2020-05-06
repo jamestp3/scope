@@ -1,14 +1,15 @@
 package com.Scope.scopeapi.repository.CourseRepo;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 
 public class CustomCourseRepositoryImpl implements CustomCourseRepository {
 
@@ -17,27 +18,36 @@ public class CustomCourseRepositoryImpl implements CustomCourseRepository {
     EntityManager em;
 
 
-    public List<Map> findAllCourses(){
-        Query query = em.createNativeQuery("SELECT * FROM course");
-        List<String[]> result = query.getResultList();
+    public JSONArray findAllCourses() throws IOException, JSONException {
+        List<Object[]> list= em.createNativeQuery("SELECT * FROM course").getResultList();
 
-        Map map;
-        List<Map> mapList = new ArrayList<Map>();
-        for (String[] s: result) {
-            map  = new HashMap<>();
-        for(int i =0; i<s.length/2;i++){                       //no good :(
-            map.put(s[i],s[i+1]);
+        JSONArray json_arr=new JSONArray();
+        for(Object[] s: list){
+            JSONObject json_obj = new JSONObject();
+            json_obj.put("CRN",(String) s[0]);
+            json_obj.put("Department",(String) s[1]);
+            json_obj.put("Course_Title",(String) s[2]);
+            json_obj.put("Course_Number",(String) s[3]);
+            json_arr.put(json_obj);
         }
-            mapList.add(map);
-        }
-
-        return mapList;
+        return json_arr;
     }
 
-    public List<String[]> findCourseByCRN(String id){
+    public JSONArray findCourseByCRN(String id) throws JSONException {
         Query query = em.createNativeQuery("SELECT * FROM course WHERE CRN =?");
         query.setParameter(1,id);
-        List<String[]> result = query.getResultList();
-        return result;
+        List<Object[]> list = query.getResultList();
+
+
+        JSONArray json_arr=new JSONArray();
+        for(Object[] s: list){
+            JSONObject json_obj = new JSONObject();
+            json_obj.put("CRN",(String) s[0]);
+            json_obj.put("Department",(String) s[1]);
+            json_obj.put("Course_Title",(String) s[2]);
+            json_obj.put("Course_Number",(String) s[3]);
+            json_arr.put(json_obj);
+        }
+        return json_arr;
     }
 }

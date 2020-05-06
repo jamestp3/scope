@@ -13,10 +13,13 @@ import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
 
 import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
 import com.mongodb.BasicDBObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -45,14 +48,14 @@ public class ScopeController {
 
     //students
     @GetMapping(value ="/students")
-    public List<String[]> getAllStudents(){
-        return studentRepository.findAllStudents();//.toString();
+    public String getAllStudents() throws JSONException {
+        return studentRepository.findAllStudents().toString();//.toString();
     }
 
     @GetMapping(value ="/student/{id}")
-    public String[] getStudentById(@PathVariable String id){
-       List<String[]> student = studentRepository.findStudentByNetId(id);
-       return student.get(0);
+    public String getStudentById(@PathVariable String id) throws JSONException {
+       return studentRepository.findStudentByNetId(id).toString();
+       //return student.get(0);
     }
 
     @PostMapping("/student")
@@ -76,13 +79,13 @@ public class ScopeController {
 
 //instructors
     @GetMapping(value ="/instructors")
-    public List<String[]> getAllInstructors(){
-        return instructorRepository.findAllInstructors() ;//.toString();
+    public String getAllInstructors() throws JSONException {
+        return instructorRepository.findAllInstructors().toString() ;//.toString();
     }
 
     @GetMapping(value ="/instructor/{id}")
-    public List<String[]> getInstructorById(@PathVariable String id){
-         return instructorRepository.findInstructorByNetId(id);
+    public String getInstructorById(@PathVariable String id) throws JSONException {
+         return instructorRepository.findInstructorByNetId(id).toString();
         //return instructor.get();
     }
 
@@ -107,13 +110,13 @@ public class ScopeController {
 
 //courses
     @GetMapping(value ="/courses")
-    public List<Map> getAllCourses(){
-        return courseRepository.findAllCourses();//.toString();
+    public String getAllCourses() throws IOException, JSONException {
+        return  courseRepository.findAllCourses().toString();//.toString();
     }
 
     @GetMapping(value ="/course/{id}")
-    public List<String[]> getCourseById(@PathVariable String id){
-          return courseRepository.findCourseByCRN(id);
+    public String getCourseById(@PathVariable String id) throws JSONException {
+          return courseRepository.findCourseByCRN(id).toString();
             }
 
     @PostMapping("/course")
@@ -138,8 +141,8 @@ public class ScopeController {
     //enrollments
 
     @GetMapping(value ="/enrollment")
-    public List<String[]> getAllEnrollments(){
-        return enrollmentRepository.findAllEnrollments();//.toString();
+    public String getAllEnrollments() throws JSONException {
+        return enrollmentRepository.findAllEnrollments().toString();//.toString();
     }
 
 
@@ -167,11 +170,11 @@ public class ScopeController {
     //query
 
     @GetMapping(value ="/query/{netId}")
-    public List<String[]> getStudentClasses(@PathVariable String netId){
+    public String getStudentClasses(@PathVariable String netId) throws JSONException {
 
 
 
-       return studentRepository.findStudentClasses(netId);
+       return studentRepository.findStudentClasses(netId).toString();
     }
 
 }

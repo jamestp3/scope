@@ -1,7 +1,8 @@
 package com.Scope.scopeapi.repository.EnrollmentRepo;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public interface CustomEnrollmentRepository {
-    List<String[]> findAllEnrollments();
+    JSONArray findAllEnrollments() throws JSONException;
     }
