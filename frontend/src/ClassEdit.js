@@ -6,10 +6,8 @@ import AppNavbar from './AppNavbar';
 class ClassEdit extends Component {
 
     emptyItem = {
-        CRN: '',
-        department: '',
-        courseNumber: '',
-        courseTitle: '',
+        net_id: '',
+        crn: '',
     };
 
     constructor(props) {
@@ -23,7 +21,7 @@ class ClassEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`/api/course/${this.props.match.params.id}`)).json();
+            const group = await (await fetch(`/api/enrollment/${this.props.match.params.id}`)).json();
             this.setState({item: group});
         }
     }
@@ -41,7 +39,7 @@ class ClassEdit extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/api/course', {
+        await fetch('/api/enrollment', {
             method: (item.id) ? 'PUT' : 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -54,7 +52,7 @@ class ClassEdit extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.id ? 'Edit Student' : 'Add Student'}</h2>;
+        const title = <h2>{item.id ? 'Edit Class' : 'Add Class'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -62,24 +60,14 @@ class ClassEdit extends Component {
                 {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="CRN">CRN</Label>
-                        <Input type="text" name="CRN" id="CRN" value={item.CRN || ''}
-                               onChange={this.handleChange} autoComplete="CRN"/>
+                        <Label for="net_id">NetId</Label>
+                        <Input type="text" name="net_id" id="net_id" value={item.net_id || ''}
+                               onChange={this.handleChange} autoComplete="net_id"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="department">Department</Label>
-                        <Input type="text" name="department" id="department" value={item.department || ''}
-                               onChange={this.handleChange} autoComplete="department"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="courseNumber">Course Number</Label>
-                        <Input type="text" name="courseNumber" id="courseNumber" value={item.courseNumber || ''}
-                               onChange={this.handleChange} autoComplete="courseNumber"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="courseTitle">Course Title</Label>
-                        <Input type="text" name="courseTitle" id="courseTitle" value={item.courseTitle || ''}
-                               onChange={this.handleChange} autoComplete="courseTitle"/>
+                        <Label for="crn">CRN</Label>
+                        <Input type="text" name="crn" id="crn" value={item.crn || ''}
+                               onChange={this.handleChange} autoComplete="crn"/>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
