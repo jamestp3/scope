@@ -61,7 +61,7 @@ class GroupEdit extends Component {
                 {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="netId">NetId</Label>
+                        <Label for="netId">CRN</Label>
                         <Input type="text" name="netId" id="name" value={item.netId || ''}
                                onChange={this.handleChange} autoComplete="netId"/>
                     </FormGroup>

@@ -10,19 +10,10 @@ class Home extends Component {
             <div>
                 <AppNavbar/>
                 <Container fluid>
-                    <Button color="link"><Link to="/students">Update Students Table</Link></Button>
+                    <Button color="link"><Link to="/students">Student View</Link></Button>
                 </Container>
                 <Container fluid>
-                    <Button color="link"><Link to="/instructors">Update Instructors Table</Link></Button>
-                </Container>
-                <Container fluid>
-                    <Button color="link"><Link to="/courses">Update Courses Table</Link></Button>
-                </Container>
-                <Container fluid>
-                    <Button color="link"><Link to="/assignments">Update Assignments Table</Link></Button>
-                </Container>
-                <Container fluid>
-                    <Button color="link"><Link to="/assessments">Update Assessments Table</Link></Button>
+                    <Button color="link"><Link to="/instructors">Instructor View</Link></Button>
                 </Container>
             </div>
         );
