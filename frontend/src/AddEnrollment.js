@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class ClassEdit extends Component {
+class AddEnrollment extends Component {
 
     emptyItem = {
         net_id: '',
@@ -52,7 +52,7 @@ class ClassEdit extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.id ? 'Edit Class' : 'Add Class'}</h2>;
+        const title = <h2>{'Add Class'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -70,7 +70,7 @@ class ClassEdit extends Component {
                                onChange={this.handleChange} autoComplete="crn"/>
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit">Save</Button>{' '}
+                        <Button color="primary" type="submit">Submit</Button>{' '}
                         <Button color="secondary" tag={Link} to="/students">Cancel</Button>
                     </FormGroup>
                 </Form>
@@ -79,4 +79,4 @@ class ClassEdit extends Component {
     }
 }
 
-export default withRouter(ClassEdit);
+export default withRouter(AddEnrollment);

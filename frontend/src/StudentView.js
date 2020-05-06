@@ -8,7 +8,6 @@ class StudentView extends Component {
     constructor(props) {
         super(props);
         this.state = {groups: [], isLoading: true};
-      //  this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
@@ -19,6 +18,7 @@ class StudentView extends Component {
             .then(data => this.setState({groups: data, isLoading: false}));
     }
 
+
     render() {
         const {groups, isLoading} = this.state;
 
@@ -27,18 +27,20 @@ class StudentView extends Component {
         }
 
         const groupList = groups.map(group => {
-            const crn = `${group.crn || ''} `;
+            const department = `${group.department || ''} `;
+            const course_number = `${group.course_number || ''} `;
+            const course_title = `${group.course_title || ''} `;
 
-            return <tr key={group.net_id}>
-                    <td style={{whiteSpace: 'nowrap'}}>{group.net_id}</td>
-                    <td>{this.crn}</td>
-
-                    {/*<td>*/}
-                    {/*    <ButtonGroup>*/}
-                    {/*        <Button size="sm" color="primary" tag={Link} to={"/students/" + group.netId}>Edit</Button>*/}
-                    {/*        <Button size="sm" color="danger" onClick={() => this.remove(group.netId)}>Delete</Button>*/}
-                    {/*    </ButtonGroup>*/}
-                    {/*</td>*/}
+            return <tr key={group.crn}>
+                    <td style={{whiteSpace: 'nowrap'}}>{group.crn}</td>
+                    <td>{department}</td>
+                    <td>{course_number}</td>
+                    <td>{course_title}</td>
+                    <td>
+                        {/*<ButtonGroup>*/}
+                        {/*    <Button size="sm" color="danger" onClick={() => this.remove(group.net_id, group.crn)}>Delete</Button>*/}
+                        {/*</ButtonGroup>*/}
+                    </td>
                    </tr>
         });
 
@@ -51,11 +53,11 @@ class StudentView extends Component {
                      <div className="float-right">
                          <Button color="primary" tag={Link} to="/students/search">Search Class</Button>
                      </div>
-                    {/*<div className="float-right">*/}
-                    {/*    <Button color="danger" tag={Link} to="/students/delete">Delete Class</Button>*/}
-                    {/*</div>*/}
                     <div className="float-right">
-                        <Button color="success" tag={Link} to="/students/new">Add Class</Button>
+                        <Button color="danger" tag={Link} to="/students/enrollment/delete">Delete Class</Button>
+                    </div>
+                    <div className="float-right">
+                        <Button color="success" tag={Link} to="/students/enrollment/add">Add Class</Button>
                     </div>
                     <h3>Student Name Here</h3>
                     <h4>Classes</h4>

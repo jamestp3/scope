@@ -2,30 +2,18 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
-// import { Text, StyleSheet } from "react-native";
-//
-// const styles = StyleSheet.create({
-//     baseText: {
-//         fontFamily: "Cochin"
-//     },
-//     titleText: {
-//         fontSize: 20,
-//         fontWeight: "bold"
-//     }
-// });
 
-class StudentSearch extends Component {
+class DeleteEnrollment extends Component {
 
     emptyItem = {
-        netId: '',
+        net_id: '',
+        crn: '',
     };
-
 
     constructor(props) {
         super(props);
         this.state = {
-            item: this.emptyItem,
-            value: "hello"
+            item: this.emptyItem
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,7 +21,7 @@ class StudentSearch extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`/api/course/${this.props.match.params.id}`)).json();
+            const group = await (await fetch(`/api/enrollment/${this.props.match.params.id}`)).json();
             this.setState({item: group});
         }
     }
@@ -51,16 +39,20 @@ class StudentSearch extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        const response = await fetch('api/course/' + item.crn);
-        const data = await response.json();
-        this.setState({ value: data.toString() })
-
-        //this.props.history.push('/students');
+        await fetch('/api/enrollment/' + item.net_id + '/' + item.crn, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item),
+        });
+        this.props.history.push('/students');
     }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{'Search Class'}</h2>;
+        const title = <h2>{'Delete Class'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -68,25 +60,23 @@ class StudentSearch extends Component {
                 {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
+                        <Label for="net_id">NetId</Label>
+                        <Input type="text" name="net_id" id="net_id" value={item.net_id || ''}
+                               onChange={this.handleChange} autoComplete="net_id"/>
+                    </FormGroup>
+                    <FormGroup>
                         <Label for="crn">CRN</Label>
                         <Input type="text" name="crn" id="crn" value={item.crn || ''}
                                onChange={this.handleChange} autoComplete="crn"/>
                     </FormGroup>
                     <FormGroup>
-                        <Button color="primary" type="submit">Search</Button>{' '}
+                        <Button color="primary" type="submit">Submit</Button>{' '}
                         <Button color="secondary" tag={Link} to="/students">Cancel</Button>
                     </FormGroup>
                 </Form>
-                {/*<Text style={styles.baseText}>*/}
-                {/*    <Text numberOfLines={5}>{this.state.value}</Text>*/}
-                {/*</Text>*/}
-                <p>
-                    {this.state.value}
-                </p>
-
             </Container>
         </div>
     }
 }
 
-export default withRouter(StudentSearch);
+export default withRouter(DeleteEnrollment);
