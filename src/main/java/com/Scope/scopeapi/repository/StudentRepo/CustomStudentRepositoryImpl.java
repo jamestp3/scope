@@ -74,4 +74,24 @@ public JSONArray findStudentClasses(String netid) throws JSONException {
     }
     return json_arr;
 }
+
+    public JSONArray findStudentCRNs(String netid) throws JSONException {
+        Query query = em.createNativeQuery("SELECT e.crn FROM students s " +
+                "join enrollment e on s.net_id = e.net_id " +
+                "WHERE s.net_id = ?"
+        );
+        query.setParameter(1,netid);
+        List<String> list = query.getResultList();
+
+
+        JSONArray json_arr=new JSONArray();
+        for(String s: list){
+            JSONObject json_obj = new JSONObject();
+
+            json_obj.put("CRN",(String) s);//[0]);
+            json_arr.put(json_obj);
+        }
+        return json_arr;
+    }
+
 }

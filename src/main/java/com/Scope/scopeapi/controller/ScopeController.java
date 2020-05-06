@@ -13,12 +13,14 @@ import com.Scope.scopeapi.repository.EnrollmentRepo.EnrollmentRepository;
 import com.Scope.scopeapi.repository.InstructorRepo.InstructorRepository;
 
 import com.Scope.scopeapi.repository.StudentRepo.StudentRepository;
+import com.Scope.scopeapi.repository.TeachesRepo.TeachesRepository;
 import com.mongodb.BasicDBObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Decoder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -42,6 +44,8 @@ public class ScopeController {
     private EnrollmentRepository enrollmentRepository;
     @Autowired
     private AssessmentRepository assessmentRepository;
+    @Autowired
+    private TeachesRepository teachesRepository;
 
 
 
@@ -160,6 +164,28 @@ public class ScopeController {
         return ResponseEntity.ok().build();
     }
 
+
+    //teaches
+
+    @GetMapping(value ="/teaches")
+    public String getAllTeaches() throws JSONException {
+        return teachesRepository.findAllTeaches().toString();//.toString();
+    }
+
+    @PostMapping("/teaches")
+    ResponseEntity<Teaches> createTeaches(@Valid @RequestBody Teaches teaches) throws URISyntaxException{
+        Teaches result = teachesRepository.save(teaches);
+        return ResponseEntity.created(new URI("/teaches/" +result.getCRN())).body(teaches);
+    }
+
+    @DeleteMapping(value = "/teaches/{netId}/{CRN}")
+    ResponseEntity<?> deletTeaches(@PathVariable String netId, @PathVariable String CRN){
+        // Enrollment enrollment =new Enrollment(netId,CRN);
+        teachesRepository.deleteTeaches(CRN,netId);
+        return ResponseEntity.ok().build();
+    }
+
+
     //mongo
     @GetMapping(value ="/Assessment")
     public List<BasicDBObject> getAllAssessments(){
@@ -169,8 +195,19 @@ public class ScopeController {
     public List<BasicDBObject> getAssessmentByCRN(@PathVariable String CRN){
         return assessmentRepository.findAssessmentByClass(CRN);
     }
-
-
+    @GetMapping(value ="/Assessment/student/{netId}")
+    public List<BasicDBObject> getAssessmentByNetId(@PathVariable String netId) throws JSONException {
+        return assessmentRepository.findAssessmentByNetId(netId);
+    }
+    @GetMapping(value ="/Assessment/instructor/{netId}")
+    public List<BasicDBObject> getAssessmentByInstructorNetId(@PathVariable String netId) throws JSONException {
+        return assessmentRepository.findAssessmentByInstructorNetId(netId);
+    }
+    @PostMapping("/Assessment")
+    ResponseEntity<BasicDBObject> createEnrollment(@Valid @RequestBody BasicDBObject assessment) throws URISyntaxException{
+        assessmentRepository.insertAssessment(assessment);
+        return ResponseEntity.created(new URI("/enrollment/?")).body(assessment);
+    }
 
 
 
@@ -178,12 +215,14 @@ public class ScopeController {
 
     //query
 
-    @GetMapping(value ="/query/{netId}")
+    @GetMapping(value ="/query/student/{netId}")
     public String getStudentClasses(@PathVariable String netId) throws JSONException {
-
-
 
        return studentRepository.findStudentClasses(netId).toString();
     }
+    @GetMapping(value ="/query/instructor/{netId}")
+    public String getInstructorClasses(@PathVariable String netId) throws JSONException {
 
+        return instructorRepository.findInstructorClasses(netId).toString();
+    }
 }

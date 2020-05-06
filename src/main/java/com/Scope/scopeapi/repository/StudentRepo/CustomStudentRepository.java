@@ -8,4 +8,5 @@ public interface CustomStudentRepository {
     JSONArray findAllStudents() throws JSONException;
     JSONArray findStudentByNetId(String id) throws JSONException;
     JSONArray findStudentClasses(String netId) throws JSONException;
+    JSONArray findStudentCRNs(String netid) throws JSONException;
 }
