@@ -49,7 +49,7 @@ class StudentSearch extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{'Search Class'}</h2>;
+        const title = <h2>{'Search Course'}</h2>;
 
         return <div>
             <AppNavbar/>

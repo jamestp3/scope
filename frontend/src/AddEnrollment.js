@@ -52,7 +52,7 @@ class AddEnrollment extends Component {
 
     render() {
         const {item} = this.state;
-        const title = <h2>{'Add Class'}</h2>;
+        const title = <h2>{'Add Enrollment'}</h2>;
 
         return <div>
             <AppNavbar/>

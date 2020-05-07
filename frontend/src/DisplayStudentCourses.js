@@ -3,17 +3,18 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class DeleteEnrollment extends Component {
+class DisplayStudentCourses extends Component {
 
     emptyItem = {
-        net_id: '',
-        crn: '',
+        netId: '',
     };
+
 
     constructor(props) {
         super(props);
         this.state = {
-            item: this.emptyItem
+            item: this.emptyItem,
+            value: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +22,7 @@ class DeleteEnrollment extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const group = await (await fetch(`/api/enrollment/${this.props.match.params.id}`)).json();
+            const group = await (await fetch(`/api/course/${this.props.match.params.id}`)).json();
             this.setState({item: group});
         }
     }
@@ -39,20 +40,16 @@ class DeleteEnrollment extends Component {
         event.preventDefault();
         const {item} = this.state;
 
-        await fetch('/api/enrollment/' + item.net_id + '/' + item.crn, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item),
-        });
-        this.props.history.push('/students');
+        const response = await fetch('http://localhost:8080/api/query/student/' + item.net_id);
+        const data = await response.json();
+        this.setState({ value: JSON.stringify(data) })
+
+        //this.props.history.push('/students');
     }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{'Delete Enrollment'}</h2>;
+        const title = <h2>{'Display Courses By Student'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -65,18 +62,16 @@ class DeleteEnrollment extends Component {
                                onChange={this.handleChange} autoComplete="net_id"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="crn">CRN</Label>
-                        <Input type="text" name="crn" id="crn" value={item.crn || ''}
-                               onChange={this.handleChange} autoComplete="crn"/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Button color="primary" type="submit">Submit</Button>{' '}
+                        <Button color="primary" type="submit">Display</Button>{' '}
                         <Button color="secondary" tag={Link} to="/students">Cancel</Button>
                     </FormGroup>
                 </Form>
+                <text>
+                    {this.state.value}
+                </text>
             </Container>
         </div>
     }
 }
 
-export default withRouter(DeleteEnrollment);
+export default withRouter(DisplayStudentCourses);
