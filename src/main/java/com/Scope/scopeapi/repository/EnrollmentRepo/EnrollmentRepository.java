@@ -13,9 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface EnrollmentRepository extends JpaRepository<Enrollment,String>, CustomEnrollmentRepository {
 
 
-   // Long deleteBynet_idAndCRN(String net_id, String CRN);
+
+
+
+
+    // Long deleteBynet_idAndCRN(String net_id, String CRN);
     @Modifying
     @Transactional
-    @Query("delete from Enrollment e WHERE e.CRN =:CRN and e.net_id =:NET")
+    @Query(value ="delete from Enrollment e WHERE e.CRN =:CRN and e.net_id =:NET")
     void deleteEnrollment(@Param("CRN") String CRN,@Param("NET") String netId);
 }
