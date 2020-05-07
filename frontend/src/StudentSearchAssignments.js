@@ -57,9 +57,9 @@ class StudentSearchAssignments extends Component {
                 {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
-                        <Label for="net_id">CRN</Label>
-                        <Input type="text" name="net_id" id="net_id" value={item.net_id || ''}
-                               onChange={this.handleChange} autoComplete="net_id"/>
+                        <Label for="crn">CRN</Label>
+                        <Input type="text" name="crn" id="crn" value={item.crn || ''}
+                               onChange={this.handleChange} autoComplete="crn"/>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Search</Button>{' '}

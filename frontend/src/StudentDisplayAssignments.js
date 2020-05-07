@@ -43,8 +43,6 @@ class StudentDisplayAssignments extends Component {
         const response = await fetch('http://localhost:8080/api/Assessment/student/' + item.net_id);
         const data = await response.json();
         this.setState({ value: JSON.stringify(data) })
-
-        //this.props.history.push('/students');
     }
 
     render() {

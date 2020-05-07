@@ -15,10 +15,6 @@ class StudentView extends Component {
     }
 
     componentDidMount() {
-        // if (this.props.match.params.id !== 'new') {
-        //     const group = fetch(`/api/course/${this.props.match.params.id}`).json();
-        //     this.setState({item: group});
-        // }
         this.setState({isLoading: true});
         fetch('api/students')
             .then(response => response.json())
@@ -54,16 +50,11 @@ class StudentView extends Component {
                 <td>{course_number}</td>
                 <td>{course_title}</td>
                 <td>
-                    {/*<ButtonGroup>*/}
-                    {/*    <Button size="sm" color="danger" onClick={() => this.remove(group.net_id, group.crn)}>Delete</Button>*/}
-                    {/*</ButtonGroup>*/}
                 </td>
             </tr>
         });
 
-
         return (
-
             <div>
                 <AppNavbar/>
                 <Container fluid>
@@ -81,23 +72,15 @@ class StudentView extends Component {
                     <div className="float-left">
                         <Button color="success" tag={Link} to="/students/enrollment/add">Add Enrollment</Button>
                     </div>
-                    {/*<h4>Assignments</h4>*/}
                     <div className="float-left">
                         <Button color="primary" tag={Link} to="/students/assignment/display">Display Assignment By Student</Button>
                     </div>
                     <div className="float-left">
                         <Button color="success" tag={Link} to="/students/assignment/search">Search Assignment By CRN</Button>
                     </div>
-
-
-
-                </Container>
-                <Container>
-
                 </Container>
             </div>
-    );
+        );
     }
 }
-
 export default StudentView;
